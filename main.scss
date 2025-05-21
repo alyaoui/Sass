@@ -1,0 +1,272 @@
+// import global rules
+@use './sass/layout/global-rules';
+
+// import contact
+@use './sass/pages/contact';
+// import mixins
+@use './sass/helpers/mixins' as *;
+
+//import variables
+@use './sass/variables/colors' as *;
+//import function
+@use './sass/helpers/function' as *;
+
+$alt_color: $test;
+
+.header {
+    color: $alt_color;
+}
+.footer  {
+    $alt_color: black !global;
+    background-color: $alt_color;
+}
+.copyright {
+    background-color: $alt_color;
+}
+
+.sidebar {
+    background-color: $main;
+    color: $alt;
+}
+.nav {
+    background-color: $test;
+}
+.parent {
+    font-size: 25px;
+    .child {
+        color: yellow;
+        .child-child {
+            font-size: 13px;
+        }
+    }
+}
+
+.parent_one ,
+.parent_two {
+    padding: 20px;
+    .child {
+        color: green;
+    }
+    + p {
+        margin: 15px;
+    }
+}
+
+.parent_css {
+    > {
+        .element {
+            font-weight: bold;
+        }
+        .element_two {
+            display: block;
+        }
+    }
+}
+%main {
+    font-size: 15px;
+    font-weight: 500;
+}
+
+section {
+    @extend %main;
+    font-variant: normal;
+}
+.cart {
+    @extend %main;
+    display: inline;
+}
+
+
+.parent {
+    &.red {
+        color: beige;
+    }
+    &.blue {
+        color: aqua;
+    }
+    font: {
+        size: 15px;
+        weight : bold;
+    }
+}
+
+$theme : 'light';
+.page {
+    @if $theme == "light" {
+        background-color: red;
+
+    }@else {
+        background-color: green;
+    }
+}
+$rounded : true;
+.box {
+    border-radius: if($rounded, 6px,null);
+}
+$direction: 'bottom';
+.arrow-div {
+    @extend %main;
+    font-size: 20px;
+    border: 1px solid #f0f0f0;
+    display: flex;
+    justify-content: center;
+    width: 300px;
+    height: 300px;
+    align-items: center;
+    position: relative;
+    margin: 50px auto;
+    &::after{
+        content: "";
+        position: absolute;
+        border: 20px solid transparent;
+        @if $direction == 'top' {
+
+            top: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-bottom-color:red ;
+        } @else if $direction == 'right' {
+            right: -40px;
+            top: 50%;
+            transform: translateY(-50%);
+            border-left-color:red ;
+        } @else if $direction == 'left' {
+            left: -40px;
+            top: 50%;
+            transform: translateY(-50%);
+            border-right-color:red ;
+        } @else if $direction == 'bottom' {
+            bottom: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-top-color:red ;
+ 
+        } @else  {
+            @error "This direction #{$direction} note valid";
+
+        }
+    }
+}
+//wassim
+/*Comment*/
+
+$company: "elzero";
+.ad-#{$company}-#{unique-id()} 
+{
+    /* Comment #{$company} */ 
+    font-size: 20px;
+    background-image: url("imgs/#{$company}.png");
+}
+  ul.links {
+      @include list-reset;
+    }
+    @mixin cercle($dimension) {
+        border-radius: 50%;
+        width: $dimension;
+        height: $dimension;
+
+      }
+      .cercle-100 {
+        @include cercle(100px);
+        
+      } 
+      .cercle-200 {
+        @include cercle(200px);
+
+      } 
+@for $i from 1 through 10  {
+     .class-#{$i} {
+        font-size: #{$i + 10px};
+     }
+}
+$dimension : 0;
+@for $i from 1 through 10  {
+    .cercle-#{100 + $dimension} {
+        width: #{$dimension + 100px};
+        height: #{$dimension + 100px};
+    }
+    $dimension : $dimension + 100;
+}
+
+$themes : red,green , yellow;
+@each $theme in $themes {
+.#{$theme}-themes {
+    .product {
+        background-color: white;
+        border-bottom: 2px solid $theme;
+    }
+    .title {
+        color: $theme;
+        font-weight: bold;
+    }
+
+}
+}
+$socials: (
+    "facebook": "blue",
+    "github": "red",
+    "youtube": "black",
+);
+@each $name , $color in $socials {
+   .#{$name}  {
+    background-color: $color;
+   }
+}
+
+$classes : "one" 20px red , "two" 30px black;
+@each $name , $font , $color in $classes {
+    .#{$name} {
+        font-size: $font;
+        padding: $font / 2;
+        background-color: $color;
+
+    }
+}
+
+$start:1;
+@while $start < 10 {
+    .width-#{$start * 100} {
+        width: $start *100px;
+        height: ($start *100px)/2;
+
+    }
+    $start :$start + 1 ;
+}
+
+$gride-cols : 12;
+@for $i from 1 through $gride-cols {
+    .col-#{$i} {
+        width: percentage($i / $gride-cols);
+    }
+}
+
+$width:200px ;
+.element {
+    width: $width;
+    height : half($width);
+    font-size: calculate(100,200,300);
+}
+.overlay {
+    @include overlay(red,0.5);
+}
+
+  @include kyf(fade-in) {
+          from {
+        opacity: 0;
+      }
+      to {
+         opacity: 1;
+      }
+    }
+  @include kyf(wassim);
+
+
+  .media 
+  {
+    @include breakpoints(mobile) {
+        font-size: 15px;
+    }
+    @include breakpoints(small) {
+        font-size: 16px;
+    }
+  }

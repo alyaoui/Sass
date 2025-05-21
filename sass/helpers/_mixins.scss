@@ -1,0 +1,41 @@
+@mixin list-reset {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  @mixin overlay ($color, $opacity) {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba($color, $opacity);
+  }
+  @mixin kyf($anim-name) {
+    @-webkit-keyframes #{$anim-name} {
+      @content;
+    }
+    @keyframes #{$anim-name} {
+   @content;
+  }
+}
+
+@mixin breakpoints($point) {
+  @if $point == mobile {
+    @media (max-width:767px) {
+      @content;
+    }
+  }
+  @else if $point == small {
+    @media (min-width:768px )and (max-width:991px){
+      @content;
+    }
+  } @else {
+
+    @media (min-width:991px )and (max-width:1200px){
+      @content
+    }
+  }
+}
+
